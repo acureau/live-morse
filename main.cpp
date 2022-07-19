@@ -5,7 +5,7 @@
 #include <map>
 
 DWORD frequency = 750;
-DWORD time_unit = 50;
+DWORD interval = 50;
 std::map<char, std::string> char_map = {
     {'A', ".-"},
     {'B', "-..."},
@@ -55,19 +55,19 @@ void do_beep() {
 
             std::string morse = char_map.find(letter)->second;
             if (morse == ".......") {
-                Sleep(7*time_unit);
+                Sleep(7*interval);
             }
             else {
                 for (auto &ch : morse) {
                     if (ch == '.') {
-                        Beep(frequency, time_unit);
+                        Beep(frequency, interval);
                     }
                     else {
-                        Beep(frequency, 3*time_unit);
+                        Beep(frequency, 3*interval);
                     }
-                    Sleep(time_unit);
+                    Sleep(interval);
                 }
-                Sleep(3*time_unit);
+                Sleep(3*interval);
             }
         }
     }
@@ -76,13 +76,13 @@ void do_beep() {
 int main(int argc, char *argv[]) {
     if (argc == 2) {
         frequency = (DWORD)argv[0];
-        time_unit = (DWORD)argv[1];
+        interval = (DWORD)argv[1];
     }
 
     HANDLE beeper = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)do_beep, 0, 0, NULL);
     std::cout << "<CTRL-C to Exit>\n";
     std::cout << "Frequency: " << frequency << "hz\n";
-    std::cout << "Time Unit: " << time_unit << "ms\n\n";
+    std::cout << "Time Unit: " << interval << "ms\n\n";
     
     while (1) {
         char letter = toupper(_getch());
