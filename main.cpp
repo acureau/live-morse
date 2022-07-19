@@ -74,9 +74,9 @@ void do_beep() {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc == 2) {
-        frequency = (DWORD)argv[0];
-        interval = (DWORD)argv[1];
+    if (argc == 3) {
+        frequency = (DWORD)atoi(argv[1]);
+        interval = (DWORD)atoi(argv[2]);
     }
 
     HANDLE beeper = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)do_beep, 0, 0, NULL);
